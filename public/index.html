@@ -112,10 +112,12 @@
     </div>
 
     <script>
-        // Initialize Supabase client
-        const supabaseUrl = 'https://hexnbihdtixlnyedhqdc.supabase.co'
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhleG5iaWhkdGl4bG55ZWRocWRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI2OTIwNDAsImV4cCI6MjA0ODI2ODA0MH0.Poxryb9bivSimvWY-2jUjPK_qUTBj6I7vOFfZfMUlzo'
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+        // Initialize Supabase client - Fix the initialization
+        const { createClient } = supabase
+        const supabaseClient = createClient(
+            'https://hexnbihdtixlnyedhqdc.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhleG5iaWhkdGl4bG55ZWRocWRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI2OTIwNDAsImV4cCI6MjA0ODI2ODA0MH0.Poxryb9bivSimvWY-2jUjPK_qUTBj6I7vOFfZfMUlzo'
+        )
 
         // Enhanced form submission handling
         async function handleSubmission(formData, type) {
@@ -130,7 +132,7 @@
                     }
                 });
 
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('waitlist')
                     .insert([{
                         name: formData.get('name'),
